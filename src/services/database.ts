@@ -1,5 +1,4 @@
-import { Database } from "https://deno.land/x/aloedb@0.9.0/mod.ts";
-// import { join } from "https://deno.land/std@0.153.0/path/mod.ts";
+import { Database } from "../deps.ts";
 
 // Structure of stored documents
 interface Film {

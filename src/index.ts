@@ -1,4 +1,4 @@
-import opine, { json } from "https://deno.land/x/opine@2.2.0/mod.ts";
+import { opine, json } from './deps.ts';
 import * as database from './services/database.ts';
 
 const db = await database.init()
