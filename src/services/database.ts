@@ -1,5 +1,5 @@
 import { Database } from "../../deps.ts";
-import { AuthCookie } from "./schema.ts";
+import { AuthCookieEntry } from "../shared/types.ts";
 
 interface IAloeDatabase<T> {
   insertMany: (many: T[]) => Promise<T[]>;
@@ -9,10 +9,10 @@ interface IAloeDatabase<T> {
 }
 
 export class AuthCookieDatabase {
-  private constructor(private db: IAloeDatabase<AuthCookie>) {}
+  private constructor(private db: IAloeDatabase<AuthCookieEntry>) {}
 
   static init = async (seed = false) => {
-    const db = new Database<AuthCookie>("./src/data/cookies.json");
+    const db = new Database<AuthCookieEntry>("./src/data/cookies.json");
 
     if (seed) {
       await db.insertMany([
@@ -33,8 +33,8 @@ export class AuthCookieDatabase {
   };
 
   upsert = async (
-    query: Partial<AuthCookie>,
-    next: AuthCookie,
+    query: Partial<AuthCookieEntry>,
+    next: AuthCookieEntry,
   ) => {
     const found = await this.db.findOne(query);
     if (found) {
@@ -44,5 +44,5 @@ export class AuthCookieDatabase {
     return this.db.insertOne(next);
   };
 
-  findOne = (partial: Partial<AuthCookie>) => this.db.findOne(partial);
+  findOne = (partial: Partial<AuthCookieEntry>) => this.db.findOne(partial);
 }

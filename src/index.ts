@@ -1,13 +1,13 @@
 import { json, opine } from "../deps.ts";
 import * as database from "./services/database.ts";
-import { isAuthCookie } from "./services/schema.ts";
+import { isAuthCookieEntry, isValidQuery } from "./shared/validation.ts";
 
 const db = await database.AuthCookieDatabase.init();
 const app = opine();
 
 app.use(json());
 app.use(function (_, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept",
@@ -19,26 +19,33 @@ app.get("/test", (_, res) => {
   res.send("Hello friends, I hope you are well!");
 });
 
-app.get("/:name", async (req, res) => {
+app.get("/query", async (request, response) => {
+  const sendNotFound = () => response.sendStatus(404);
+
+  const { query } = request;
+  if (!isValidQuery(query)) {
+    sendNotFound();
+    return;
+  }
+
   try {
-    const { name } = req.params;
-    const found = await db.findOne({ name });
-    if (found === null) throw new Error("nothing found");
-    console.log(`${name} requested`);
-    res.setHeader("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-    res.setHeader(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept",
-    );
-    res.send(JSON.stringify(found, null, 2));
-  } catch (error) {
-    res.send(JSON.stringify({ error: error.message }));
+    const { name, host } = query;
+    const found = await db.findOne({ name, host });
+    if (!found) {
+      sendNotFound();
+      return;
+    }
+
+    console.log(`${name}@${host} requested`);
+    response.send(JSON.stringify(found, null, 2));
+  } catch (e) {
+    response.setStatus(500).send(JSON.stringify({ error: e.message }));
   }
 });
 
 app.post("/post", async (request, response) => {
   const body = request.body;
-  if (!isAuthCookie(body)) {
+  if (!isAuthCookieEntry(body)) {
     response.send(
       JSON.stringify({
         error: "body is not a valid entry",
