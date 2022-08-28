@@ -41,3 +41,13 @@ scripts:
       - vr lint
       - vr format
     gitHook: pre-commit
+
+  compile:
+    desc: compile script into single executable
+    allow:
+      - net
+      - read
+      - write
+      - env
+    cachedOnly: true
+    cmd: deno compile --output ./bin/postdue --allow-net --allow-read --allow-write --allow-env ./src/index.ts
