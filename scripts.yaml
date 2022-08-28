@@ -23,6 +23,7 @@ scripts:
     allow:
       - run
       - read
+      - write
       - env
 
   lock_cache:
