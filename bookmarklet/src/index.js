@@ -14,12 +14,12 @@ const copyText = (txt) => {
   selection.removeAllRanges();
   document.body.removeChild(node);
 };
-const postToken = (key, token) => {
+const postToken = (name, value) => {
   
   const options = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ [key]: token }),
+    body: JSON.stringify({ name, value, host: window.location.host }),
   };
   return globalThis.fetch(URL, options);
 };
