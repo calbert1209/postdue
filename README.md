@@ -21,9 +21,10 @@ $ brew install deno
 
 ### Instal Veloceraptor 🦖
 
-[Veloceraptor](https://velociraptor.run/) is a Deno tool that executes scripts similar to the way `npm` or
-`yarn` can execute tasks in the `"scripts"` section of a `package.json` file.
-You'll need it to execute the scripts setup in `scripts.yaml`.
+[Veloceraptor](https://velociraptor.run/) is a Deno tool that executes scripts
+similar to the way `npm` or `yarn` can execute tasks in the `"scripts"` section
+of a `package.json` file. You'll need it to execute the scripts setup in
+`scripts.yaml`.
 
 ```bash
 $ deno install -qAn vr https://deno.land/x/velociraptor@1.5.0/cli.ts
