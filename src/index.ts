@@ -15,12 +15,12 @@ app.get('/test', (_, res) => {
   res.send('Hello friends, I hope you are well!');
 });
 
-app.get('/:id', async (req, res) => {
+app.get('/:key', async (req, res) => {
   try {
-    const id = parseInt(req.params.id, 10);
-    const found = await db.findOne({ id });
+    const {key} = req.params;
+    const found = await db.findOne({ name:key });
     if (found === null) throw new Error('nothing found');
-    console.log(`id ${id} requested`);
+    console.log(`key ${key} requested`);
     res.setHeader("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
     res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.send(JSON.stringify(found, null, 2));
