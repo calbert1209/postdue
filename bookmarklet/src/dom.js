@@ -1,5 +1,3 @@
-export const alertResult = (title, msg) => alert(`${title}\n${msg}`);
-
 export const getToken = (key) =>
   window.cookieStore.get(key).then((c) => c.value);
 
@@ -24,4 +22,9 @@ export const postToken = (name, value) => {
     body: JSON.stringify({ name, value, host: window.location.host }),
   };
   return globalThis.fetch(URL, options);
+};
+
+export const HOST_NAME_MAP = {
+  "app.shippio.jp": "X-Auth-p",
+  "localhost:3005": "X-Auth-dev",
 };

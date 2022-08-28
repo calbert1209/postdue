@@ -1,6 +1,6 @@
-import { alertResult, copyText, getToken, postToken } from "./dom.js";
+import { copyText, getToken, HOST_NAME_MAP, postToken } from "./dom.js";
 
-const KEY = "X-Auth-p";
+const KEY = HOST_NAME_MAP[globalThis.location.host];
 
 getToken(KEY)
   .then((token) => {
@@ -8,5 +8,5 @@ getToken(KEY)
     return postToken(KEY, token);
   })
   .then((resp) => resp.json())
-  .then((json) => alertResult("token sent", `${JSON.stringify(json)}`))
-  .catch((err) => alertResult("error", err));
+  .then((json) => globalThis.alert(`${JSON.stringify(json)}`))
+  .catch((err) => globalThis.alert(err));
