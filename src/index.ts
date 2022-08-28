@@ -2,7 +2,7 @@ import { json, opine } from "../deps.ts";
 import * as database from "./services/database.ts";
 import { isAuthCookie } from "./services/schema.ts";
 
-const db = await database.init();
+const db = await database.AuthCookieDatabase.init();
 const app = opine();
 
 app.use(json());
@@ -47,8 +47,8 @@ app.post("/post", async (request, response) => {
     );
     return;
   }
-  const { name, host, value } = body;
-  const nextVersion = await db.updateOne({ name, host }, { value });
+  const { name, host } = body;
+  const nextVersion = await db.upsert({ name, host }, body);
   response.send({
     msg: "post recvd",
     nextVersion,
