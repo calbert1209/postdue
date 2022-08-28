@@ -22,3 +22,11 @@ scripts:
   install:
     desc: download the project's dependencies into the machine's cache using integrity check
     cmd: deno cache --reload --lock=./lock.json ./deps.ts
+
+  lint: deno lint
+  format: deno fmt
+  pre-commit:
+    cmd:
+      - vr lint
+      - vr format
+    gitHook: pre-commit

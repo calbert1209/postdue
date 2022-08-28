@@ -2,7 +2,7 @@ const KEY = "X-Auth-p";
 const URL = "http://localhost:8000/post";
 
 const alertResult = (title, msg) => alert(`${title}\n${msg}`);
-const getToken= (key) => window.cookieStore.get(key).then((c) => c.value);
+const getToken = (key) => window.cookieStore.get(key).then((c) => c.value);
 const copyText = (txt) => {
   const node = document.createElement("textarea");
   node.textContent = txt;
@@ -15,7 +15,6 @@ const copyText = (txt) => {
   document.body.removeChild(node);
 };
 const postToken = (name, value) => {
-  
   const options = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
