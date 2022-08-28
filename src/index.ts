@@ -1,4 +1,4 @@
-import { opine, json } from './deps.ts';
+import { opine, json } from '../deps.ts';
 import * as database from './services/database.ts';
 
 const db = await database.init()

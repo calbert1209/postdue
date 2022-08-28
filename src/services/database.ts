@@ -1,4 +1,4 @@
-import { Database } from "../deps.ts";
+import { Database } from "../../deps.ts";
 
 // Structure of stored documents
 interface Film {
